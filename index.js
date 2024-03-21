@@ -1,21 +1,40 @@
 const AVAILABLEMOVES = 3;
+const TOTALROUNDS = 5;
+
 let moveChoice = ['rock','paper','scissor'];
+
 function getComputerChoice(){
     let computerMove = Math.floor(Math.random()*AVAILABLEMOVES);
-    console.log("Computer choice = " + moveChoice[computerMove]);
     return moveChoice[computerMove];
 }
-playerSelection = prompt("Type your move (rock, paper, scissor)").toLowerCase();
-    let computerSelection = getComputerChoice();
-    let result = playgame(playerSelection, computerSelection);
-    alert(result);
 
-function playgame(playerSelection, computerSelection) {
-     console.log("Player choice = " + playerSelection);
-     if(playerSelection == computerSelection) return("It's a Tie");
-     else if((playerSelection === 'rock' && computerSelection === 'scissor') || (playerSelection === 'paper' && computerSelection === 'rock') || (playerSelection === 'scissor' && computerSelection === 'paper'))
-        return("Player wins! "+ playerSelection+ " beats "+ computerSelection);
+let result = 0;
+for(let round = 1 ; round <= TOTALROUNDS; round++){
+     alert("Round :" + round);
+    let computerSelection = getComputerChoice();
+    let playerSelection = prompt("Type your move (rock, paper, scissor)").toLowerCase();
+
+     result += playRound(playerSelection,computerSelection);
+}
+
+if(result > 0)
+    alert("Player wins the tournament");
+else if(result < 0)
+    alert("Computer wins the tournament");
+else
+    alert("The Tournament is tied");
+
+function playRound(playerSelection, computerSelection) {
+     if(playerSelection == computerSelection){
+        alert("It's a Tie");
+        return 0;
+     }
+     else if((playerSelection === 'rock' && computerSelection === 'scissor') || (playerSelection === 'paper' && computerSelection === 'rock') || (playerSelection === 'scissor' && computerSelection === 'paper')){
+        alert("Player wins! "+ playerSelection+ " beats "+ computerSelection);
+        return 1;
+     }
     else{
-     return("Computer wins! "+ computerSelection+ " beats "+ playerSelection);
+     alert("Computer wins! "+ computerSelection+ " beats "+ playerSelection);
+     return -1;
     }
 }
